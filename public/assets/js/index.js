@@ -1,3 +1,5 @@
+// const uuid = require('../helpers/uuid.js')
+
 document.addEventListener('DOMContentLoaded', () => {
 let noteForm;
 let noteTitle;
@@ -76,7 +78,8 @@ const renderActiveNote = () => {
 const handleNoteSave = () => {
   const newNote = {
     title: noteTitle.value,
-    text: noteText.value
+    text: noteText.value,
+    // id: uuid(),
   };
   saveNote(newNote).then(() => {
     getAndRenderNotes();
@@ -88,9 +91,11 @@ const handleNoteSave = () => {
 const handleNoteDelete = (e) => {
   // Prevents the click listener for the list from being called when the button inside of it is clicked
   e.stopPropagation();
+  console.log('deleteNote', e);
 
-  const note = e.target;
-  const noteId = JSON.parse(note.parentElement.getAttribute('data-note')).id;
+  const note = e.target.parentElement;
+  const noteId = JSON.parse(note.getAttribute('data-note')).id;
+  console.log(noteId);
 
   if (activeNote.id === noteId) {
     activeNote = {};
